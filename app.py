@@ -29,14 +29,13 @@ def criar_pix_real_teste():
         "external_reference": "TESTE_REAL_001",
         "total_amount": "1.00",
         "description": "Teste Real Mercado Pago R$ 1,00",
-        "notification_url": "https://trevo-webhook.onrender.com/webhook/mp",
         "payer": {
             "email": "mcv.valerio@gmail.com"
         },
         "transactions": {
             "payments": [
                 {
-                    "amount": "1.00",
+                    "amount": "1.50",
                     "payment_method": {
                         "id": "pix",
                         "type": "bank_transfer"
@@ -73,8 +72,7 @@ def criar_pix_real_teste():
         })
 
     except Exception:
-        return jsonify(resp_json), resp.status_code
-        
+        return jsonify(resp_json), resp.status_code        
 @app.route("/criar-order-pix-teste")
 def criar_order_pix_teste():
     url = "https://api.mercadopago.com/v1/orders"
