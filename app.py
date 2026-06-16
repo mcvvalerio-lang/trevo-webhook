@@ -39,20 +39,35 @@ def criar_order_pix_teste():
         }
     }
 
-    resp = requests.post(url, json=payload, headers=headers, timeout=20)
+    resp = requests.post(
+        url,
+        json=payload,
+        headers=headers,
+        timeout=20
+    )
+
+    resp_json = resp.json()
 
     print("=== CRIAR ORDER PIX TESTE ===")
     print("HTTP:", resp.status_code)
-    print("Resposta:", resp.text)
+    print("Resposta:", resp_json)
 
-    return jsonify({
-        "status": resp_json.get("status"),
-        "order_id": resp_json.get("id"),
-        "external_reference": resp_json.get("external_reference"),
-        "ticket_url": resp_json["transactions"]["payments"][0]["payment_method"]["ticket_url"],
-        "qr_code": resp_json["transactions"]["payments"][0]["payment_method"]["qr_code"]
-    })
-    
+    try:
+        pagamento = resp_json["transactions"]["payments"][0]
+        metodo = pagamento["payment_method"]
+
+        return jsonify({
+            "status": resp_json.get("status"),
+            "order_id": resp_json.get("id"),
+            "external_reference": resp_json.get("external_reference"),
+            "payment_id": pagamento.get("id"),
+            "ticket_url": metodo.get("ticket_url"),
+            "qr_code": metodo.get("qr_code")
+        })
+
+    except Exception:
+        return jsonify(resp_json), resp.status_code
+        
 @app.route("/")
 def home():
     return "Trevo Online"
