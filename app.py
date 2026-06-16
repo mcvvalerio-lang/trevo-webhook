@@ -1,4 +1,5 @@
-from flask import Flask, request
+from flask import Flask, request, jsonify
+from datetime import datetime
 
 app = Flask(__name__)
 
@@ -8,7 +9,16 @@ def home():
 
 @app.route("/webhook/mp", methods=["POST"])
 def webhook_mp():
-    print("Webhook recebido")
-    print(request.json)
+    dados = request.get_json(silent=True)
 
-    return "OK", 200
+    print("=== WEBHOOK MP RECEBIDO ===")
+    print("Data/hora:", datetime.now().isoformat())
+    print("Headers:", dict(request.headers))
+    print("JSON:", dados)
+    print("===========================")
+
+    return jsonify({
+        "status": "ok",
+        "mensagem": "Webhook recebido pelo Trevo",
+        "dados_recebidos": dados
+    }), 200
