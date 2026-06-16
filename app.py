@@ -7,6 +7,14 @@ app = Flask(__name__)
 def home():
     return "Trevo Online"
 
+@app.route("/teste/<codigo>")
+def teste(codigo):
+
+    return {
+        "status": "ok",
+        "codigo": codigo
+    }
+
 @app.route("/webhook/mp", methods=["GET", "POST"])
 def webhook_mp():
 
