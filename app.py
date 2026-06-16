@@ -24,7 +24,7 @@ def criar_order_pix_teste():
         "total_amount": "3.00",
         "description": "Bolão Trevo - Concurso 1543",
         "payer": {
-            "email": "teste@testuser.com"
+            "email": "test_payer_154387@testuser.com"
         },
         "transactions": {
             "payments": [
