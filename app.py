@@ -141,28 +141,19 @@ def home():
 @app.route("/webhook/mp", methods=["GET", "POST"])
 def webhook_mp():
     if request.method == "GET":
-        return jsonify({"status": "ok", "mensagem": "Webhook Trevo funcionando"})
-
-    evento = request.get_json(silent=True) or {}
-    print("=== WEBHOOK MP RECEBIDO ===")
-    print("Data:", datetime.now().isoformat())
-    print("Evento:", evento)
-
-    tipo = evento.get("type")
-    payment_id = (evento.get("data") or {}).get("id")
-
-    if tipo == "payment" and payment_id:
-        detalhes = consultar_pagamento(payment_id)
-        print("Detalhes do pagamento:", detalhes)
-
         return jsonify({
             "status": "ok",
-            "payment_id": payment_id,
-            "detalhes": detalhes
-        }), 200
+            "mensagem": "Webhook Trevo funcionando"
+        })
 
-    return jsonify({"status": "ignorado", "evento": evento}), 200
+    dados = request.get_json(silent=True) or {}
+    args = request.args.to_dict()
 
+    print("=== WEBHOOK MP RECEBIDO ===")
+    print("ARGS:", args)
+    print("JSON:", dados)
+
+    return jsonify({"status": "recebido"}), 200
 
 def consultar_pagamento(payment_id):
     url = f"https://api.mercadopago.com/v1/payments/{payment_id}"
