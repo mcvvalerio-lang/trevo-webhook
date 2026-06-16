@@ -7,18 +7,26 @@ app = Flask(__name__)
 def home():
     return "Trevo Online"
 
-@app.route("/webhook/mp", methods=["POST"])
+@app.route("/webhook/mp", methods=["GET", "POST"])
 def webhook_mp():
-    dados = request.get_json(silent=True)
 
     print("=== WEBHOOK MP RECEBIDO ===")
-    print("Data/hora:", datetime.now().isoformat())
-    print("Headers:", dict(request.headers))
+    print("Método:", request.method)
+    print("Data:", datetime.now().isoformat())
+
+    if request.method == "GET":
+        return jsonify({
+            "status": "ok",
+            "metodo": "GET",
+            "mensagem": "Webhook Trevo funcionando"
+        })
+
+    dados = request.get_json(silent=True)
+
     print("JSON:", dados)
-    print("===========================")
 
     return jsonify({
         "status": "ok",
-        "mensagem": "Webhook recebido pelo Trevo",
-        "dados_recebidos": dados
-    }), 200
+        "metodo": "POST",
+        "dados": dados
+    })
