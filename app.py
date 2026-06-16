@@ -27,7 +27,7 @@ def criar_pix_real_teste():
     payload = {
         "type": "online",
         "external_reference": "TESTE_REAL_001",
-        "total_amount": "1.00",
+        "total_amount": "1.50",
         "description": "Teste Real Mercado Pago R$ 1,00",
         "payer": {
             "email": "mcv.valerio@gmail.com"
