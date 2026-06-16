@@ -45,7 +45,13 @@ def criar_order_pix_teste():
     print("HTTP:", resp.status_code)
     print("Resposta:", resp.text)
 
-    return jsonify(resp.json()), resp.status_code
+    return jsonify({
+        "status": resp_json.get("status"),
+        "order_id": resp_json.get("id"),
+        "external_reference": resp_json.get("external_reference"),
+        "ticket_url": resp_json["transactions"]["payments"][0]["payment_method"]["ticket_url"],
+        "qr_code": resp_json["transactions"]["payments"][0]["payment_method"]["qr_code"]
+    })
     
 @app.route("/")
 def home():
