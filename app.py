@@ -5,9 +5,14 @@ from datetime import datetime
 
 app = Flask(__name__)
 
+
 MP_ACCESS_TOKEN = os.getenv("MP_ACCESS_TOKEN")
 import uuid
 
+@app.route("/consultar/<payment_id>")
+def consultar(payment_id):
+    return jsonify(consultar_pagamento(payment_id))
+    
 @app.route("/criar-pix-real-teste")
 def criar_pix_real_teste():
 
