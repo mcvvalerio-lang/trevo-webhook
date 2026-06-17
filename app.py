@@ -178,13 +178,13 @@ def webhook_mp():
     tipo_evento = (
         dados.get("type")
         or args.get("type")
-        )
+    )
 
-if tipo_evento != "payment":
-    return jsonify({
-        "status": "ignorado",
-        "motivo": f"tipo_evento {tipo_evento} não processado"
-    }), 200
+    if tipo_evento != "payment":
+        return jsonify({
+            "status": "ignorado",
+            "motivo": f"tipo_evento {tipo_evento} não processado"
+        }), 200
 
     print("=== WEBHOOK MP RECEBIDO ===")
     print("ARGS:", args)
