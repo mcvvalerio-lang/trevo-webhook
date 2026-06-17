@@ -175,6 +175,17 @@ def webhook_mp():
     dados = request.get_json(silent=True) or {}
     args = request.args.to_dict()
 
+    tipo_evento = (
+        dados.get("type")
+        or args.get("type")
+        )
+
+if tipo_evento != "payment":
+    return jsonify({
+        "status": "ignorado",
+        "motivo": f"tipo_evento {tipo_evento} não processado"
+    }), 200
+
     print("=== WEBHOOK MP RECEBIDO ===")
     print("ARGS:", args)
     print("JSON:", dados)
